@@ -187,9 +187,6 @@ install_deploy_key_on_github () {
     -d '{"title": "Deploy Key", "key": "'"$PUBLIC_KEY"'", "read_only": true}'
 }
 
-# use this command to copy .env and setupvps.sh to copy to the repository you have created
-# rsync -avz -e ssh -o StrictHostKeyChecking=no" .env setupvps.sh  root@<host_ip>:/root
-
 # Tasks done with non root user
 
 check_env_file

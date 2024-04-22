@@ -25,8 +25,8 @@ To make sure the user was created, just type `ls /home/` and you will see the na
 ## Download the script to accomplish the task:
 
 ```bash
-curl -O https://github.com/geraldonovais/setupvps/blob/main/.env
-curl -O https://github.com/geraldonovais/setupvps/blob/main/setupvps.sh
+wget https://raw.githubusercontent.com/geraldonovais/setupvps/main/setupvps.sh
+wget https://raw.githubusercontent.com/geraldonovais/setupvps/main/.env
 ````
 Give permissions to execute
 
