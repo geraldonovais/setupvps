@@ -20,7 +20,7 @@ chsh -s /bin/bash $USER_NAME
 su - $USER_NAME
 ````
 
-To make sure the user was created, just type `<ls /home/>` and you will see the name of the new user
+To make sure the user was created, just type `ls /home/` and you will see the name of the new user
 
 ## Download the script to accomplish the task:
 
