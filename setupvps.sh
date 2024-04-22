@@ -18,6 +18,34 @@ update_system() {
     sudo apt-get autoremove -y
 }
 
+create_ssh_keys() {
+
+    # Set the path to your public key file
+    public_key_file="/home/$USER_NAME/.ssh/id_rsa.pub"
+
+    # Check if SSH keys exist
+    if [ ! -f ~/.ssh/id_rsa ]; then
+        echo "SSH key pair not found. Generating SSH keys..."
+        ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -N ""
+
+        echo "copying ssh keys to authorized_keys"
+        cat "$public_key_file" >> ~/.ssh/authorized_keys
+
+        echo "SSH keys generated successfully."
+    else
+        echo "SSH key pair already exists."
+
+        # Check if the public key is already present in authorized_keys
+        if grep -qF "$(cat "$public_key_file")" ~/.ssh/authorized_keys; then
+            echo "Public key already exists in authorized_keys."
+        else
+            # Append the public key to authorized_keys
+            cat "$public_key_file" >> ~/.ssh/authorized_keys
+            echo "Public key appended to authorized_keys."
+        fi
+    fi
+}
+
 install_docker() {
 
     echo "Installing docker..."
@@ -101,6 +129,9 @@ init_git_repo() {
 
 setup_git_FLS() {
    
+    # Enters into project directory
+    cd "/var/www/$REPO_NAME_ON_GITHUB" || exit 1
+    
     git lfs install
 
     # Git FLS will track jpg, png, gif, svg, psd, and sql files
@@ -126,6 +157,8 @@ install_deploy_key_on_github () {
 # rsync -avz -e ssh -o StrictHostKeyChecking=no" .env setupvps.sh  root@<host_ip>:/root
 
 # Tasks done with non root user
+
+create_ssh_keys
 
 update_system
 
