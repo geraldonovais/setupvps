@@ -1,6 +1,40 @@
 #!/bin/bash
 
-source .env
+#source .env
+
+check_env_file() {
+
+    env_file=".env"
+
+    # Check if .env file exists
+    if [ ! -f "$env_file" ]; then
+        echo "Error: .env file not found."
+        exit 1
+    fi
+
+    # Check if each line in .env file is well-formatted
+    while IFS= read -r line; do
+
+        # Skip blank lines and comment lines
+        if [[ "$line" =~ ^\s*$ || "$line" =~ ^\s*# ]]; then
+            continue
+        fi
+
+        # Extract the value part of the line
+        value=$(echo "$line" | cut -d '=' -f 2-)
+
+        # Check if there ares values inside angle brackets
+        if grep -qE '[<>]' <<< "$value"; then
+            echo "Replace with your values without these characters < & >: $value"
+        fi
+
+        if [[ ! "$line" =~ ^[A-Za-z_][A-Za-z0-9_]*= ]]; then
+            echo "Error: .env file is not well-formatted. Invalid line: $line"
+            exit 1
+        fi
+
+    done < "$env_file"
+}
 
 update_system() {
 
@@ -131,7 +165,7 @@ setup_git_FLS() {
    
     # Enters into project directory
     cd "/var/www/$REPO_NAME_ON_GITHUB" || exit 1
-    
+
     git lfs install
 
     # Git FLS will track jpg, png, gif, svg, psd, and sql files
@@ -158,16 +192,14 @@ install_deploy_key_on_github () {
 
 # Tasks done with non root user
 
+check_env_file
 create_ssh_keys
-
 update_system
-
 install_docker
 add_user_to_docker_group
 
 install_git
 install_git_fls
-
 init_git_repo
 setup_git_FLS
 
