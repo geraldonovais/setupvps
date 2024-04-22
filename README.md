@@ -3,7 +3,7 @@ Script to install Docker, Git, Git LFS on your VPS and configure the first deplo
 
 ## Create a user
 
-First type these two commands replacing <user> and <password> with the user name you want to create
+First type these two commands replacing `<user>` and `<password>` with the user name you want to create
 
 ```bash
 export USER_NAME=<user_name>
