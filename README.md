@@ -1,6 +1,12 @@
 # setupvps
 Script to install Docker, Git, Git LFS on your VPS and configure the first deploy from your GitHub account  
 
+## Requirements
+
+A cloud server, virtual private server (VPS) or dedicated server, with an install of:
+
+- Ubuntu 22.04 or later
+
 ## Create a user
 
 First type these two commands replacing `<user>` and `<password>` with the user name you want to create
@@ -14,7 +20,7 @@ Now, copy and paste the lines below to execute the commands in sequence. It will
 
 ```bash
 useradd -m $USER_NAME
-echo "$USER_NAME: $USER_PASSWORD " | sudo chpasswd
+echo "$USER_NAME:$USER_PASSWORD" | sudo chpasswd
 usermod -aG sudo $USER_NAME
 chsh -s /bin/bash $USER_NAME
 su - $USER_NAME
