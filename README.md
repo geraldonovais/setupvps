@@ -28,7 +28,7 @@ su - $USER_NAME
 
 To make sure the user was created, just type `ls /home/` and you will see the name of the new user
 
-## Download the script to accomplish the task:
+## Download the script along with environment variables file to complete the task:
 
 ```bash
 curl -fLo setupvps.sh https://raw.githubusercontent.com/geraldonovais/setupvps/main/setupvps.sh
@@ -38,4 +38,24 @@ Give permissions to execute
 
 ```bash
 chmod 700 setupvps.sh
+````
+### Update the .env file 
+
+Update the .env file you just downloaded with your values. For example, in my case it was:
+
+```bash
+# REPO_NAME_ON_GITHUB
+# This variable will be used to:
+# create the project folder with the same name in /var/www/
+# Init a empty Git repo in your project folder
+# Setup git FLS in your project folder
+REPO_NAME_ON_GITHUB=<repository>
+
+# USER_NAME
+# Must be the same user you have created when you did "export USER_NAME=<user_name>"
+# This variable will be used to:
+# Create your ssh keys and put in your home directory
+# Add your user name to docker group
+# Add your user as owner of the "/var/www/" folder
+USER_NAME=<user>
 ````
