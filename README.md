@@ -1,5 +1,5 @@
 # setupvps
-Script to install Docker, Git, Git LFS on your VPS   
+Script to install Docker, Git, Git LFS, generate SSH keys and create your project folder in your virtual private server (VPS)
 
 ## Requirements
 
@@ -28,7 +28,7 @@ su - $USER_NAME
 
 To make sure the user was created, just type `ls /home/` and you will see the name of the new user
 
-## Download the script along with environment variables file to complete the task:
+## Download the script along with the environment variables file to complete the task:
 
 ```bash
 curl -fLo setupvps.sh https://raw.githubusercontent.com/geraldonovais/setupvps/main/setupvps.sh
@@ -69,3 +69,7 @@ Now that you've updated the .env file with your values, you can run the script y
 ```bash
 ./setupvps.sh
 ````
+
+After execution, the script displays a report with everything that was done. 
+
+Enjoy it, because you don't need to do things manually :)
