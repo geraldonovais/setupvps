@@ -138,9 +138,9 @@ install_git() {
 # It's recommended to install Git before installing Git LFS (Large File Storage). 
 # Git LFS is an extension to Git, so it requires Git to be installed and available 
 # on your system in order to function properly.
-install_git_fls() {
+install_git_LFS() {
 
-    echo "Installing Git FLS..."
+    echo "Installing Git LFS..."
     
     curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
     sudo apt-get update
@@ -167,14 +167,14 @@ init_git_repo() {
     git remote add origin "$REPO_SSH_URL"
 }
 
-setup_git_FLS() {
+setup_git_LFS() {
    
     # Enters into project directory
     cd "/var/www/$REPO_NAME_ON_GITHUB" || exit 1
 
     git lfs install
 
-    # Git FLS will track jpg, png, gif, svg, psd, and sql files
+    # Git LFS will track jpg, png, gif, svg, psd, and sql files
     git lfs track "*.jpg" "*.png" "*.gif" "*.svg" "*.psd" "*.sql"
 }
 
@@ -188,9 +188,9 @@ if check_env_file -eq "0"; then
     add_user_to_docker_group
 
     install_git
-    install_git_fls
+    install_git_LFS
     init_git_repo
-    setup_git_FLS
+    setup_git_LFS
 
     echo ""
     echo "If everything went well, the following tasks have been completed:"
@@ -201,7 +201,7 @@ if check_env_file -eq "0"; then
     echo "Git Installed:"
     git -v
     echo ""
-    echo "Git FLS installed:"
+    echo "Git LFS installed:"
     git lfs version
     echo ""
     echo "SSH keys created in: ~/.ssh"
@@ -214,7 +214,7 @@ if check_env_file -eq "0"; then
     echo ""
     echo "Git repository initialized at: /var/www/$REPO_NAME_ON_GITHUB"
     echo ""
-    echo "Git FLS configured to manage non-code files"
+    echo "Git LFS configured to manage non-code files"
     cd /var/www/geraldonovais.com.br/ && git lfs track && cd ~/
 
    exit;
