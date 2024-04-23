@@ -61,3 +61,11 @@ REPO_NAME_ON_GITHUB=<repository>
 
 USER_NAME=<user>
 ````
+
+## Run the script
+
+Now that you've updated the .env file with your values, you can run the script you downloaded in the steps above:
+
+```bash
+./setupvps.sh
+````
