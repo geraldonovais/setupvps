@@ -178,21 +178,6 @@ setup_git_FLS() {
     git lfs track "*.jpg" "*.png" "*.gif" "*.svg" "*.psd" "*.sql"
 }
 
-install_deploy_key_on_github () {
-
-    echo "Installing deploy key on GitHub..."
-
-    # Read the public key file into a variable
-    PUBLIC_KEY=$(cat ~/.ssh/id_rsa.pub)
-
-    # Create the deploy key using the GitHub API
-    curl -X POST \
-    -H "Authorization: token $TOKEN" \
-    -H "Accept: application/vnd.github.v3+json" \
-    https://api.github.com/repos/$REPO_OWNER/$REPO_NAME_ON_GITHUB/keys \
-    -d '{"title": "Deploy Key", "key": "'"$PUBLIC_KEY"'", "read_only": true}'
-}
-
 # Tasks done with non root user
 
 
@@ -206,8 +191,6 @@ if check_env_file -eq "0"; then
     install_git_fls
     init_git_repo
     setup_git_FLS
-
-    #install_deploy_key_on_github
    exit;
 fi
 
