@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#source .env
+source .env
 
 check_env_file() {
 
@@ -26,7 +26,8 @@ check_env_file() {
 
         # Check if there ares values inside angle brackets
         if grep -qE '[<>]' <<< "$value"; then
-            echo "Error: .env file is not well-formatted."
+            printf '\e[31m%s\e[0m' "Error: .env file is not well-formatted."
+            echo ""
             echo "Replace with your values without these characters < & >: $value"
             status=1
         fi
