@@ -153,7 +153,7 @@ init_git_repo() {
 
     sudo mkdir -p "/var/www/$REPO_NAME_ON_GITHUB"
 
-    sudo chown -R $USER_NAME:$USER_NAME "/var/www/"
+    sudo chown -R "$USER_NAME":"$USER_NAME" "/var/www/"
 
     # Enters into project directory
     cd "/var/www/$REPO_NAME_ON_GITHUB" || exit 1
