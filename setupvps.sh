@@ -26,6 +26,7 @@ check_env_file() {
 
         # Check if there ares values inside angle brackets
         if grep -qE '[<>]' <<< "$value"; then
+            echo "Error: .env file is not well-formatted."
             echo "Replace with your values without these characters < & >: $value"
             status=1
         fi
@@ -38,22 +39,6 @@ check_env_file() {
     done < "$env_file"
 
     return $status
-}
-
-update_system() {
-
-    echo "Updating packages list..."
-
-    #  Updates the list of available packages and their versions, 
-    # but does not install or upgrade any packages
-    sudo apt-get update -y
-
-    # Upgrades all installed packages to their latest versions. 
-    # The -y flag automatically answers "yes" to any prompts
-    sudo apt-get upgrade -y
-
-    # Clean up obsolete packages
-    sudo apt-get autoremove -y
 }
 
 create_ssh_keys() {
@@ -82,6 +67,22 @@ create_ssh_keys() {
             echo "Public key appended to authorized_keys."
         fi
     fi
+}
+
+update_system() {
+
+    echo "Updating packages list..."
+
+    #  Updates the list of available packages and their versions, 
+    # but does not install or upgrade any packages
+    sudo apt-get update -y
+
+    # Upgrades all installed packages to their latest versions. 
+    # The -y flag automatically answers "yes" to any prompts
+    sudo apt-get upgrade -y
+
+    # Clean up obsolete packages
+    sudo apt-get autoremove -y
 }
 
 install_docker() {
