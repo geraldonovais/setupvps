@@ -1,5 +1,29 @@
 #!/bin/bash
 
+#
+# Script to install Docker, Git, Git LFS, generate SSH keys and create your 
+# project folder in your virtual private server (VPS)
+#
+# The latest version of this script is available at:
+# https://github.com/geraldonovais/setupvps/blob/main/setupvps.sh
+#
+# Copyright (C) 2024 Geraldo Novais Jr <geraldo.novais@gmail.com>
+#
+# This work is licensed under the Creative Commons Attribution-ShareAlike 3.0
+# Unported License: http://creativecommons.org/licenses/by-sa/3.0/
+#
+# Attribution required: please include my name in any derivative and let me
+# know how you have improved it!
+
+# =====================================================
+
+# Define your own values for these variables in the .env file.
+# The variables are explained in the .env file present in the 
+# same repository of this code
+
+# REPO_NAME_ON_GITHUB=''
+# USER_NAME=''
+
 source .env
 
 check_env_file() {
