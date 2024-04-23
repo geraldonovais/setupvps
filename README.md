@@ -41,7 +41,7 @@ chmod 700 setupvps.sh
 ````
 ### Update the .env file 
 
-Update the .env file you just downloaded with your values. For example, in my case it was:
+Update with your values, the .env file you have downloaded.
 
 ```bash
 # REPO_NAME_ON_GITHUB
