@@ -191,6 +191,32 @@ if check_env_file -eq "0"; then
     install_git_fls
     init_git_repo
     setup_git_FLS
+
+    echo ""
+    echo "If everything went well, the following tasks have been completed:"
+    echo ""
+    echo "Docker installed:"
+    docker -v
+    echo ""
+    echo "Git Installed:"
+    git -v
+    echo ""
+    echo "Git FLS installed:"
+    git lfs version
+    echo ""
+    echo "SSH keys created in: ~/.ssh"
+    ls -lt ~/.ssh/
+    echo ""
+    echo "Public key copied to: ~/.ssh/authorized_keys"
+    echo ""
+    echo "Created project directory: /var/www/$REPO_NAME_ON_GITHUB"
+    ls "/var/www/$REPO_NAME_ON_GITHUB"
+    echo ""
+    echo "Git repository initialized at: /var/www/$REPO_NAME_ON_GITHUB"
+    echo ""
+    echo "Git FLS configured to manage non-code files"
+    cd /var/www/geraldonovais.com.br/ && git lfs track && cd ~/
+
    exit;
 fi
 
