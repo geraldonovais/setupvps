@@ -9,14 +9,13 @@ A cloud server, virtual private server (VPS) or dedicated server, with an instal
 
 ## Create a user
 
-First type these two commands replacing `<user>` and `<password>` with the user name you want to create
+Copy and paste this command replacing `<user>` and `<password>` with the user name you want to create
 
 ```bash
-export USER_NAME=<user_name>
-export USER_PASSWORD=<user_password>
+export USER_NAME=<user_name> & export USER_PASSWORD=<user_password>
 ````
 
-Now, copy and paste the lines below to execute the commands in sequence. It will create the user, add it to sudo group, set the shell type and swith to the new user.
+Now, copy and paste the entire block of code below. The commands will be executed in sequence. It will create the user, add it to sudo group, set the shell type and swith to the new user. You don't need to replace the variables as the values come from the export made previously
 
 ```bash
 useradd -m $USER_NAME
@@ -28,20 +27,14 @@ su - $USER_NAME
 
 To make sure the user was created, just type `ls /home/` and you will see the name of the new user
 
-## Download the script along with the environment variables file to complete the task:
+## Download the .env file (environment variables):
 
 ```bash
-curl -fLo setupvps.sh https://raw.githubusercontent.com/geraldonovais/setupvps/main/setupvps.sh
-curl -fLo .env https://raw.githubusercontent.com/geraldonovais/setupvps/main/.env
-````
-Give permissions to execute
-
-```bash
-chmod 700 setupvps.sh
+curl -fLo .env https://raw.githubusercontent.com/geraldonovais/setupvps/main/.env & chmod 600 .env
 ````
 ### Update the .env file 
 
-Update with your values, the .env file you have downloaded.
+Update the .env file with values that suit for you
 
 ```bash
 # REPO_NAME_ON_GITHUB
@@ -62,9 +55,20 @@ REPO_NAME_ON_GITHUB=<repository>
 USER_NAME=<user>
 ````
 
+## Download the shell script to complete the task:
+
+```bash
+curl -fLo setupvps.sh https://raw.githubusercontent.com/geraldonovais/setupvps/main/setupvps.sh
+````
+Give permissions to execute
+
+```bash
+chmod 700 setupvps.sh
+````
+
 ## Run the script
 
-Now that you've updated the .env file with your values, you can run the script you downloaded in the steps above:
+Now that you've updated the .env file with your own values, you can run the script:
 
 ```bash
 ./setupvps.sh

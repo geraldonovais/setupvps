@@ -48,7 +48,7 @@ check_env_file() {
         # Extract the value part of the line
         value=$(echo "$line" | cut -d '=' -f 2-)
 
-        # Check if there ares values inside angle brackets
+        # Check if there are values inside angle brackets
         if grep -qE '[<>]' <<< "$value"; then
             printf '\e[31m%s\e[0m' "Error: .env file is not well-formatted."
             echo ""
@@ -78,6 +78,7 @@ create_ssh_keys() {
 
         echo "copying ssh keys to authorized_keys"
         cat "$public_key_file" >> ~/.ssh/authorized_keys
+        chmod 644 ~/.ssh/authorized_keys
 
         echo "SSH keys generated successfully."
     else
@@ -92,6 +93,10 @@ create_ssh_keys() {
             echo "Public key appended to authorized_keys."
         fi
     fi
+}
+
+add_know_hosts() {
+    ssh-keyscan -H -t rsa github.com >> ~/.ssh/known_hosts
 }
 
 update_system() {
@@ -171,7 +176,7 @@ install_git_LFS() {
     sudo apt-get install git-lfs
 }
 
-init_git_repo() {
+create_project_folder() {
 
     echo "Creating project directory..."
 
@@ -181,25 +186,45 @@ init_git_repo() {
 
     # Enters into project directory
     cd "/var/www/$REPO_NAME_ON_GITHUB" || exit 1
-
-    git config --global init.defaultBranch main --verbose
-
-    # initialize a git repo
-    git init
-
-    # Configure Git
-    git remote add origin "$REPO_SSH_URL"
 }
 
-setup_git_LFS() {
-   
-    # Enters into project directory
-    cd "/var/www/$REPO_NAME_ON_GITHUB" || exit 1
+add_aliases() {
+    
+    # Define the path to the .bash_aliases file
+    bash_aliases_file="$HOME/.bash_aliases"
 
-    git lfs install
+    # Check if .bash_aliases already exists
+    if [ ! -f "$bash_aliases_file" ]; then
+        # Create .bash_aliases if it doesn't exist
+        touch "$bash_aliases_file"
+    fi
 
-    # Git LFS will track jpg, png, gif, svg, psd, and sql files
-    git lfs track "*.jpg" "*.png" "*.gif" "*.svg" "*.psd" "*.sql"
+    echo "Creating some docker aliases ..."
+
+    # docker ps
+    alias_line="alias dockerps=\"docker ps --format 'table {{.ID}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}\t{{.Names}}'\""
+    echo "$alias_line" >> "$bash_aliases_file"
+    echo "Alias 'dockerps' has been created to format better docker ps"
+
+    # remove containers
+    alias_line="alias rmcontainers=\"docker rm -f $(docker ps -a -q)\""
+    echo "$alias_line" >> "$bash_aliases_file"
+    echo "Alias 'rmcontainers' has been created to remove all containers"
+
+    # remove images
+    alias_line="alias rmimages=\"docker rmi -f $(docker images -a -q)\""
+    echo "$alias_line" >> "$bash_aliases_file"
+    echo "Alias 'rmimages' has been created to remove all images"
+
+    # remove volumes
+    alias_line="alias rmvolumes=\"docker volume rm $(docker volume ls -q)\""
+    echo "$alias_line" >> "$bash_aliases_file"
+    echo "Alias 'rmvolumes' has been created to remove all volumes"
+
+    # system prune
+    alias_line="alias pruneall=\"docker system prune -a\""
+    echo "$alias_line" >> "$bash_aliases_file"
+    echo "Alias 'pruneall' has been created"
 }
 
 # Tasks done with non root user
@@ -207,14 +232,15 @@ setup_git_LFS() {
 
 if check_env_file -eq "0"; then
     create_ssh_keys
+    add_know_hosts
     update_system
     install_docker
     add_user_to_docker_group
 
     install_git
     install_git_LFS
-    init_git_repo
-    setup_git_LFS
+    create_project_folder
+    add_aliases
 
     echo ""
     echo "If everything went well, the following tasks have been completed:"
@@ -236,10 +262,6 @@ if check_env_file -eq "0"; then
     echo "Created project directory: /var/www/$REPO_NAME_ON_GITHUB"
     ls "/var/www/$REPO_NAME_ON_GITHUB"
     echo ""
-    echo "Git repository initialized at: /var/www/$REPO_NAME_ON_GITHUB"
-    echo ""
-    echo "Git LFS configured to manage non-code files"
-    cd /var/www/geraldonovais.com.br/ && git lfs track && cd ~/
 
    exit;
 fi
