@@ -39,7 +39,7 @@ USER_NAME=''
 # Function to check if variables are defined
 check_variables() {
     if [ -z "$REPO_NAME_ON_GITHUB" ] || [ -z "$USER_NAME" ]; then
-        echo "Error: VAR1 or VAR2 is not defined."
+        echo "Error: REPO_NAME_ON_GITHUB or USER_NAME is not defined."
         exit 1
     fi
 }
