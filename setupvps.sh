@@ -114,9 +114,6 @@ update_system() {
 
     # Clean up obsolete packages
     sudo apt-get autoremove -y
-
-    # shellcheck disable=SC1091
-    source .env
 }
 
 install_docker() {
@@ -190,8 +187,6 @@ create_project_folder() {
 
     sudo mkdir -p "/var/www/$REPO_NAME_ON_GITHUB"
 
-    sudo chown -R "$USER_NAME":"$USER_NAME" "/var/www/"
-
     # Enters into project directory
     cd "/var/www/$REPO_NAME_ON_GITHUB" || exit 1
 }
@@ -247,6 +242,11 @@ if check_env_file -eq "0"; then
     update_system
     install_docker
     install_docker_compose
+
+    # shellcheck disable=SC1091
+    # It's necessary to load the variables again because after some updates they are going blank
+    source .env
+
     add_user_to_docker_group
 
     install_git
