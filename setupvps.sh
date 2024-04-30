@@ -24,6 +24,7 @@
 # REPO_NAME_ON_GITHUB=''
 # USER_NAME=''
 
+# shellcheck disable=SC1091
 source .env
 
 check_env_file() {
@@ -113,6 +114,9 @@ update_system() {
 
     # Clean up obsolete packages
     sudo apt-get autoremove -y
+
+    # shellcheck disable=SC1091
+    source .env
 }
 
 install_docker() {
@@ -145,6 +149,10 @@ install_docker() {
 
     # Finally, install Docker
     sudo apt install -y docker-ce
+}
+
+install_docker_compose() {
+    sudo apt install docker-compose
 }
 
 add_user_to_docker_group() {
@@ -224,7 +232,10 @@ add_aliases() {
     # system prune
     alias_line="alias pruneall=\"docker system prune -a\""
     echo "$alias_line" >> "$bash_aliases_file"
-    echo "Alias 'pruneall' has been created"
+    echo "Alias 'pruneall' has been created"s
+
+    # shellcheck disable=SC1090
+    source "$bash_aliases_file"
 }
 
 # Tasks done with non root user
@@ -235,6 +246,7 @@ if check_env_file -eq "0"; then
     add_know_hosts
     update_system
     install_docker
+    install_docker_compose
     add_user_to_docker_group
 
     install_git
