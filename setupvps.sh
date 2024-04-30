@@ -259,9 +259,12 @@ if check_env_file -eq "0"; then
     echo ""
     echo "Public key copied to: ~/.ssh/authorized_keys"
     echo ""
+    echo "$HOME/.ssh/know_hosts created"
+    echo ""
     echo "Created project directory: /var/www/$REPO_NAME_ON_GITHUB"
     ls "/var/www/$REPO_NAME_ON_GITHUB"
     echo ""
+    echo "$HOME/.bash_aliases created"
 
    exit;
 fi
