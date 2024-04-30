@@ -17,15 +17,25 @@
 
 # =====================================================
 
-# Define your own values for these variables in the .env file.
-# The variables are explained in the .env file present in the 
-# same repository of this code
+# Define your own values for these variables
 
-# REPO_NAME_ON_GITHUB=''
-# USER_NAME=''
+# REPO_NAME_ON_GITHUB
+# This variable will be used to:
+# create the project folder with the same name in /var/www/
+# Init a empty Git repo in your project folder
+# Setup git FLS in your project folder
 
-# shellcheck disable=SC1091
-source .env
+REPO_NAME_ON_GITHUB=<repository>
+
+# USER_NAME
+# Must be the same user you have created when you did "export USER_NAME=<user_name>"
+# This variable will be used to:
+# Create your ssh keys and put in your home directory
+# Add your user name to docker group
+# Add your user as owner of the "/var/www/" folder
+
+USER_NAME=<user>
+
 
 check_env_file() {
 
@@ -149,7 +159,7 @@ install_docker() {
 }
 
 install_docker_compose() {
-    sudo apt install docker-compose
+    sudo apt install -y docker-compose
 }
 
 add_user_to_docker_group() {
@@ -242,10 +252,6 @@ if check_env_file -eq "0"; then
     update_system
     install_docker
     install_docker_compose
-
-    # shellcheck disable=SC1091
-    # It's necessary to load the variables again because after some updates they are going blank
-    source .env
 
     add_user_to_docker_group
 
