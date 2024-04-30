@@ -25,7 +25,7 @@
 # Init a empty Git repo in your project folder
 # Setup git FLS in your project folder
 
-REPO_NAME_ON_GITHUB=<repository>
+REPO_NAME_ON_GITHUB=''
 
 # USER_NAME
 # Must be the same user you have created when you did "export USER_NAME=<user_name>"
@@ -34,47 +34,14 @@ REPO_NAME_ON_GITHUB=<repository>
 # Add your user name to docker group
 # Add your user as owner of the "/var/www/" folder
 
-USER_NAME=<user>
+USER_NAME=''
 
-
-check_env_file() {
-
-    status=0
-    env_file=".env"
-
-    # Check if .env file exists
-    if [ ! -f "$env_file" ]; then
-        echo "Error: .env file not found."
-        status=1
+# Function to check if variables are defined
+check_variables() {
+    if [ -z "$REPO_NAME_ON_GITHUB" ] || [ -z "$USER_NAME" ]; then
+        echo "Error: VAR1 or VAR2 is not defined."
+        exit 1
     fi
-
-    # Check if each line in .env file is well-formatted
-    while IFS= read -r line; do
-
-        # Skip blank lines and comment lines
-        if [[ "$line" =~ ^\s*$ || "$line" =~ ^\s*# ]]; then
-            continue
-        fi
-
-        # Extract the value part of the line
-        value=$(echo "$line" | cut -d '=' -f 2-)
-
-        # Check if there are values inside angle brackets
-        if grep -qE '[<>]' <<< "$value"; then
-            printf '\e[31m%s\e[0m' "Error: .env file is not well-formatted."
-            echo ""
-            echo "Replace with your values without these characters < & >: $value"
-            status=1
-        fi
-
-        if [[ ! "$line" =~ ^[A-Za-z_][A-Za-z0-9_]*= ]]; then
-            echo "Error: .env file is not well-formatted. Invalid line: $line"
-            status=1
-        fi
-
-    done < "$env_file"
-
-    return $status
 }
 
 create_ssh_keys() {
@@ -245,8 +212,7 @@ add_aliases() {
 
 # Tasks done with non root user
 
-
-if check_env_file -eq "0"; then
+if check_variables -eq "0"; then
     create_ssh_keys
     add_know_hosts
     update_system
