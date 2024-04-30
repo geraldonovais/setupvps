@@ -12,7 +12,7 @@ A cloud server, virtual private server (VPS) or dedicated server, with an instal
 Copy and paste this command replacing `<user>` and `<password>` with the user name you want to create
 
 ```bash
-export USER_NAME=<user_name> & export USER_PASSWORD=<user_password>
+export USER_NAME="<user_name>" & export USER_PASSWORD="<user_password>"
 ````
 
 Now, copy and paste the entire block of code below. The commands will be executed in sequence. It will create the user, add it to sudo group, set the shell type and swith to the new user. You don't need to replace the variables as the values come from the export made previously
@@ -30,8 +30,14 @@ To make sure the user was created, just type `ls /home/` and you will see the na
 ## Download the .env file (environment variables):
 
 ```bash
-curl -fLo .env https://raw.githubusercontent.com/geraldonovais/setupvps/main/.env & chmod 600 .env
+curl -fLo .env https://raw.githubusercontent.com/geraldonovais/setupvps/main/.env 
 ````
+Change permissions
+
+```bash
+chmod 600 .env
+````
+
 ### Update the .env file 
 
 Update the .env file with values that suit for you
