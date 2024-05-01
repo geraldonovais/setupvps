@@ -250,6 +250,9 @@ if check_variables -eq "0"; then
     echo ""
     echo "$HOME/.bash_aliases created"
 
+    echo "Starting a new shell with the updated group membership"
+    newgrp docker
+
    exit;
 fi
 
