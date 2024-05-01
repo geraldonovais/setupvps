@@ -74,6 +74,8 @@ create_ssh_keys() {
 }
 
 add_know_hosts() {
+    
+    echo "Adding github.com to ~/.ssh/known_hosts" 
     ssh-keyscan -H -t rsa github.com >> ~/.ssh/known_hosts
 }
 
@@ -163,6 +165,8 @@ create_project_folder() {
     echo "Creating project directory..."
 
     sudo mkdir -p "/var/www/$REPO_NAME_ON_GITHUB"
+
+    sudo chown -R "$USER_NAME":"$USER_NAME" "/var/www/"
 
     # Enters into project directory
     cd "/var/www/$REPO_NAME_ON_GITHUB" || exit 1
