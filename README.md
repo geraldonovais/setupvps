@@ -33,11 +33,11 @@ To make sure the user was created, just type `ls /home/` and you will see the na
 curl -fLo setupvps.sh https://raw.githubusercontent.com/geraldonovais/setupvps/main/setupvps.sh && chmod 700 setupvps.sh
 ````
 
-## Update the variables at the beginning of the script with the values that suit for you
+### Update the variables at the beginning of the script with the values that suit for you
 
 `REPO_NAME_ON_GITHUB`  and `USER_NAME`
 
-## Run the script
+### Run the script
 
 Now, if you have updated the variables at the beginning of the script with your own values, you can run `setupvps.sh`:
 
