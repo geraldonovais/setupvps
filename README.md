@@ -35,7 +35,7 @@ curl -fLo setupvps.sh https://raw.githubusercontent.com/geraldonovais/setupvps/m
 
 ### Update the variables at the beginning of the script with the values that suit for you
 
-`REPO_NAME_ON_GITHUB`  and `USER_NAME` (Must be the same user you have created when you did "export USER_NAME=<user_name>")
+`REPO_NAME_ON_GITHUB`  and `USER_NAME` (Same user you have created when you did "export USER_NAME=<user_name>")
 
 ### Run the script
 
